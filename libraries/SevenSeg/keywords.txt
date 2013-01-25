@@ -17,6 +17,7 @@ SevenSeg	KEYWORD1
 sevenSegWrite	KEYWORD2
 blank		KEYWORD2
 zeroes		KEYWORD2
+loading		KEYWORD2
 
 #######################################
 # Constants (LITERAL1)

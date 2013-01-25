@@ -11,11 +11,22 @@
 const int latchPin = 8;
 const int clockPin = 12;
 const int dataPin = 11;
-const int numdisplays = 4;
+const int numdisplays = 1;
 
 byte val[numdisplays];
 
+
 //byte val = B01100000;
+//Array to output individual segments
+
+byte loader[6] = {   B00000001,  // = 1
+                     B00000100,  // = 6
+                     B00001000,  // = 7
+		     B01000000,  // = 8                     
+		     B00100000,  // = 13
+		     B00010000,  // = 14                               
+				}; 
+
 //Array to output bytes which light up each digit
 byte digits[11] = {  B01111101,  // = 0
                      B01100000,  // = 1
@@ -68,7 +79,26 @@ void SevenSeg::sevenSegWrite(int display[])
 		}
 //Output val array to shift register(s)
 	for (int j = numdisplays-1; j > -1; j--){
-		shiftOut(dataPin,clockPin,MSBFIRST,val[j]);
+		shiftOut(dataPin,clockPin,MSBFIRST, val[j]);
+		}		
+//Turn latch pin to high to signal end of data stream
+	digitalWrite(latchPin, HIGH);
+
+
+}
+
+void SevenSeg::loading(int display[])
+{
+//Turn latch pin low to allow shift register to read data	
+	digitalWrite(latchPin, LOW);
+	
+//Fill val[] array from input array display[]
+	for (int i = 0; i < numdisplays; i++) {
+		val[i] = loader[display[i]];
+		}
+//Output val array to shift register(s)
+	for (int j = numdisplays-1; j > -1; j--){
+		shiftOut(dataPin,clockPin,MSBFIRST, val[j]);
 		}		
 //Turn latch pin to high to signal end of data stream
 	digitalWrite(latchPin, HIGH);

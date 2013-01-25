@@ -52,6 +52,7 @@ class SevenSeg
   public:
     SevenSeg();
     void sevenSegWrite(int display[]); //Write Output
+    void loading(int display[]); //Do loading animation
     void blank();	//Make display blank
     void zeroes();	//Display zeroes		 
  // private:
